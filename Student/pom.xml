@@ -129,6 +129,12 @@
       <artifactId>hibernate-validator-annotation-processor</artifactId>
       <version>5.2.1.Final</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>easyexcel</artifactId>
+      <version>3.1.1</version>
+    </dependency>
 
   </dependencies>
 
