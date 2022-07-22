@@ -2,11 +2,13 @@ package com.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.List;
-import java.util.Objects;
+import java.net.URLEncoder;
+import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.excel.EasyExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -132,4 +134,42 @@ public class ScoreController {
 		}
 		return "xsgrcjcx";
 	}
+
+	@RequestMapping("/downloadExcel")
+	public void downExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//设置响应头
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding("UTF-8");
+
+		String filename = URLEncoder.encode("学生成绩","UTF-8");
+
+		//文件下载方式
+		response.setHeader("Content-disposition","attachment;filename="+filename+".xlsx");
+
+		//根据StudentBean模板创建数据
+		List<ScoreBean> scores = new ArrayList<>();
+		ScoreBean score1 = new ScoreBean(1001,10001,"100",30001);
+		ScoreBean score2 = new ScoreBean(1002,10002,"98",30002);
+		ScoreBean score3 = new ScoreBean(1003,10003,"97",30003);
+		ScoreBean score4 = new ScoreBean(1004,10004,"99",30004);
+		ScoreBean score5 = new ScoreBean(1005,10005,"100",30005);
+		scores.add(score1);
+		scores.add(score2);
+		scores.add(score3);
+		scores.add(score4);
+		scores.add(score5);
+
+		//设置排除的属性
+		Set<String> set = new HashSet<>();
+		set.add("page");
+		set.add("subjectName");
+		set.add("studentName");
+		set.add("teacherName");
+		set.add("subjectCredit");
+
+		//写入数据到excel
+		EasyExcel.write(response.getOutputStream(),ScoreBean.class).excludeColumnFieldNames(set).sheet("学生成绩").doWrite(scores);
+
+	}
+
 }

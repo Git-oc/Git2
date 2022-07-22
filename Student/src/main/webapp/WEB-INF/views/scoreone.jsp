@@ -35,7 +35,7 @@ function xuanze(subjectid,studentid) {
     		  if(a.status== 1){
     			  swal({title:"选择成功！",text:"您已经成功选择了本课程!",type:"success"}, 
 							function () {
-					  			location.href = "scoreone?page=1"+"&studentId="+'${userbean.userId}';
+					  			location.href = "scoreone?page=1"+"&studentId="+'${userBean.userId}';
 					    });
     		  }else{
     			  swal("哦豁","选择失败，请重试！","error");
@@ -111,7 +111,7 @@ laypage({
     jump: function(e, first){ //触发分页后的回调
         if(!first){ //一定要加此判断，否则初始时会无限刷新
         	var subjectname = document.getElementById("sousuo").value;
-            location.href = '?page='+e.curr + '&subjectName=' + encodeURI(encodeURI(subjectname)+'&studentId=' + '${userbean.userId}');
+            location.href = '?page='+e.curr + '&subjectName=' + encodeURI(encodeURI(subjectname)+'&studentId=' + '${userBean.userId}');
         }
     }
 });
@@ -119,7 +119,7 @@ laypage({
 <script type="text/javascript">
 	function sousuo() {
 		var subjectname = document.getElementById("sousuo").value;
-		location.href = 'scoreone?subjectName='+ encodeURI(encodeURI(subjectname)) + '&page=1' + '&studentId=' + '${userbean.userId}' ;
+		location.href = 'scoreone?subjectName='+ encodeURI(encodeURI(subjectname)) + '&page=1' + '&studentId=' + '${userBean.userId}' ;
 	}
 	function yxkc() {
 		layer.open({
@@ -129,7 +129,7 @@ laypage({
 		    shade: 0.8,
 		    shift: 1, //0-6的动画形式，-1不开启
 		    area: ['800px', '80%'],
-		    content: 'xsyxkc?studentId='+"${userbean.userId}"
+		    content: 'xsyxkc?studentId='+"${userBean.userId}"
 		}); 
 	}
 </script>

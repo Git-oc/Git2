@@ -92,6 +92,7 @@ function del(subjectid) {
 		</c:forEach>
 	</table>
 	<div id="page11" style="margin-top:5px; text-align:center;"></div>
+	<a href="<c:url value='/subject/downloadExcel'/>">"课程Excel下载"</a>
 </body>
 <script src="<%=request.getContextPath()%>/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">

@@ -3,41 +3,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/css/H-ui.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/H-ui.1.x.patch.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/sweetalert/sweetalert.css">
-<script src="<%=request.getContextPath()%>/js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/lib/Validform/5.3.2/Validform.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/lib/Validform/5.3.2/passwordStrength-min.js"></script>
-<script src="<%=request.getContextPath()%>/js/sweetalert/sweetalert.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$("#demoform-2").Validform({
-		tiptype:2,
-		usePlugin:{
-			datepicker:{},//日期控件校验;
-			passwordstrength:{
-				minLen:6,//设置密码长度最小值，默认为0;
-				maxLen:18,//设置密码长度最大值，默认为30;
-				trigger:function(obj,error){
-					//该表单元素的keyup和blur事件会触发该函数的执行;
-					//obj:当前表单元素jquery对象;
-					//error:所设密码是否符合验证要求，验证不能通过error为true，验证通过则为false;	
-					//console.log(error);
-					if(error){
-						obj.parent().find(".Validform_checktip").show();
-						obj.parent().find(".passwordStrength").hide();
-					}else{
-						obj.parent().find(".passwordStrength").show();
-					}
-				}
-			}
-		}
-	});
-});
-</script>
-<title>学生成绩编辑页面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="<%=request.getContextPath()%>/css/H-ui.css" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath()%>/css/H-ui.1.x.patch.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sweetalert/sweetalert.css">
+    <script src="<%=request.getContextPath()%>/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/lib/Validform/5.3.2/Validform.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/lib/Validform/5.3.2/passwordStrength-min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $("#demoform-2").Validform({
+            tiptype:2,
+            usePlugin:{
+                datepicker:{},//日期控件校验;
+                passwordstrength:{
+                    minLen:6,//设置密码长度最小值，默认为0;
+                    maxLen:18,//设置密码长度最大值，默认为30;
+                    trigger:function(obj,error){
+                        //该表单元素的keyup和blur事件会触发该函数的执行;
+                        //obj:当前表单元素jquery对象;
+                        //error:所设密码是否符合验证要求，验证不能通过error为true，验证通过则为false;
+                        //console.log(error);
+                        if(error){
+                            obj.parent().find(".Validform_checktip").show();
+                            obj.parent().find(".passwordStrength").hide();
+                        }else{
+                            obj.parent().find(".passwordStrength").show();
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+    <title>学生成绩编辑页面</title>
 </head>
 <body>
 	<div class="row" id = "demo">

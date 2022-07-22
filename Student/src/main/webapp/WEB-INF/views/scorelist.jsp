@@ -11,7 +11,45 @@
 <script src="<%=request.getContextPath()%>/lib/layer/1.9.3/layer.js"></script>
 <script src="<%=request.getContextPath()%>/lib/laypage/1.2/laypage.js"></script>
 <script src="<%=request.getContextPath()%>/js/sweetalert/sweetalert.min.js"></script>
-<title>学生列表</title>
+	<script type="text/javascript">
+		function del(scoreid) {
+			swal({
+				title: "您确定要删除这条信息吗",
+				text: "删除后将无法恢复，请谨慎操作！",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "删除",
+				closeOnConfirm: false
+			}, function () {
+				if (window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}
+				else{// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}                                                       //创建XMLHttpRequest对象
+				xmlhttp.onreadystatechange=function(){
+					if (xmlhttp.readyState==4 && xmlhttp.status==200){
+						var a = eval("("+xmlhttp.responseText+")");
+						if(a.status== 1){
+							swal({title:"删除成功！",text:"您已经永久删除了这条信息!",type:"success"},
+									function () {
+										var b = '${scorepage}' ;
+										b = Math.ceil(b/6) ;
+										location.href = "scorelist?page="+b;
+									});
+						}else{
+							swal("哦豁","删除失败，请重试！","error");
+						}
+					}
+				}	;											//服务器响应时完成相应操作
+				xmlhttp.open("post","scoredel?scoreId="+scoreid,true);
+				xmlhttp.send();
+			});
+		}
+	</script>
+<title>学生成绩列表</title>
 </head>
 <body background="<%=request.getContextPath()%>/images/010.gif">
 <div class="container-fluid">
@@ -22,48 +60,45 @@
 	</div>
 </div>
 		<div class="row">
-		  <div class="col-md-3">
-		  	<div class="input-group">
-		      <input type="text" class="form-control" placeholder="输入学生姓名搜索" id = "sousuo" value = "${studentname}">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" onclick="sousuo();">Go!</button>
-		      </span>
-	    	</div>
-		  </div>
-		  <div class="col-md-3"></div>
-		  <div class="col-md-6"></div>
+			<div class="col-md-3">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="输入成绩id搜索" id = "sousuo" value = "${scoreid}">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" onclick="sousuo();">Go!</button>
+					  </span>
+				</div>
+			</div>
+			<div class="col-md-3"><button type="button" class="btn btn-default" onclick="tianjia();">添加+</button></div>
+			<div class="col-md-6"></div>
 		</div>
 		
 	<br/>
 	<table class="table table-hover">
 		<tr class="info">
-			<th>学号</th>
-			<th>学生姓名</th>
-			<th>学生性别</th>
-			<th>所在系</th>
-			<th>班级</th>
-			<th>电话号码</th>
+			<th>成绩id</th>
+			<th>学生id</th>
+			<th>课程id</th>
+			<th>成绩</th>
 			<th>操作</th>
 		</tr>
-		<c:forEach items="${studentlist}" var="stu">
+		<c:forEach items="${scorelist}" var="score">
 			<tr>
-				<td>${stu.stuId}</td>
-				<td>${stu.stuName}</td>
-				<td>${stu.stuSex}</td>
-				<td>${stu.stuSystem}</td>
-				<td>${stu.stuClass}</td>
-				<td>${stu.stuPhone}</td>
-				<td><button type="button" onclick="bianji(${stu.stuId});" class="btn btn-info btn-xs"><i class="iconfont">&#xe66e;</i>&nbsp;编辑该学生成绩</button></td>
+				<td>${score.scoreId}</td>
+				<td>${score.studentId}</td>
+				<td>${score.subjectId}</td>
+				<td>${score.score}</td>
+				<td><button type="button" onclick="bianji(${score.scoreId});" class="btn btn-info btn-xs"><i class="iconfont">&#xe66e;</i>&nbsp;编辑该学生成绩</button></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<div id="page11" style="margin-top:5px; text-align:center;"></div>
+	<a href="<c:url value='/score/downloadExcel'/>">"学生成绩下载"</a>
 </body>
 <script src="<%=request.getContextPath()%>/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 laypage({
     cont: 'page11',
-    pages: Math.ceil("${stupage}"/6), //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18 length
+    pages: Math.ceil("${scocepage}"/6), //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18 length
     skip: true, //是否开启跳页
     skin: '#6699FF',
     curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
@@ -72,14 +107,14 @@ laypage({
     }(), 
     jump: function(e, first){ //触发分页后的回调
         if(!first){ //一定要加此判断，否则初始时会无限刷新
-        	var studengtname = document.getElementById("sousuo").value;
-            location.href = '?page='+e.curr + '&stuName=' + encodeURI(encodeURI(studengtname));
+        	var scoreId = document.getElementById("sousuo").value;
+            location.href = '?page='+e.curr + '&scoreId=' + encodeURI(encodeURI(scoreId));
         }
     }
 });
 </script>
 <script type="text/javascript">
-	function bianji(studentid) {
+	function bianji(scoreId) {
 		layer.open({
 		    type: 2,
 		    title: '学生成绩编辑页面',
@@ -87,14 +122,14 @@ laypage({
 		    shade: 0.8,
 		    shift: 1, //0-6的动画形式，-1不开启
 		    area: ['800px', '80%'],
-		    content: 'scoreeditor?stuId='+studentid
+		    content: 'scoreeditor?scoreId='+scoreId
 		});
 	}
 </script>
 <script type="text/javascript">
 	function sousuo() {
-		var studentname = document.getElementById("sousuo").value;
-		location.href = 'scorelist?stuName='+ encodeURI(encodeURI(studentname)) + '&page=1';
+		var scoreid = document.getElementById("sousuo").value;
+		location.href = 'scorelist?scoreId='+ encodeURI(encodeURI(scoreid)) + '&page=1';
 	}
 </script>
 </html>

@@ -95,6 +95,7 @@ function del(teacherid) {
 		</c:forEach>
 	</table>
 	<div id="page11" style="margin-top:5px; text-align:center;"></div>
+	<a href="<c:url value='/teacher/downloadExcel'/>">教师Excel下载</a>
 </body>
 <script src="<%=request.getContextPath()%>/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">

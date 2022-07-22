@@ -12,17 +12,17 @@ import lombok.ToString;
 @ToString
 public class StudentBean {
 
-    @ExcelProperty(value = "id")
+    @ExcelProperty(value = "学生id")
     private int stuId;
-    @ExcelProperty(value = "姓名")
+    @ExcelProperty(value = "学生姓名")
     private String stuName;
-    @ExcelProperty(value = "性别")
+    @ExcelProperty(value = "学生性别")
     private String stuSex;
     @ExcelProperty(value = "系部")
     private String stuSystem;
     @ExcelProperty(value = "班级")
     private String stuClass;
-    @ExcelProperty(value = "电话")
+    @ExcelProperty(value = "学生电话")
     private String stuPhone;
 
     private int page;

@@ -12,15 +12,15 @@ import lombok.ToString;
 @ToString
 public class TeacherBean {
 
-    @ExcelProperty(value = "id")
+    @ExcelProperty(value = "教师id")
     private int teacherId;
-    @ExcelProperty(value = "姓名")
+    @ExcelProperty(value = "教师姓名")
     private String teacherName;
-    @ExcelProperty(value = "性别")
+    @ExcelProperty(value = "教师性别")
     private String teacherSex;
-    @ExcelProperty(value = "系部")
+    @ExcelProperty(value = "所在系部")
     private String teacherSystem;
-    @ExcelProperty(value = "电话")
+    @ExcelProperty(value = "教师电话")
     private String teacherPhone;
     @ExcelProperty(value = "电子邮件")
     private String teacherEmail;

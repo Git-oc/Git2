@@ -2,11 +2,14 @@ package com.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.List;
-import java.util.Objects;
+import java.net.URLEncoder;
+import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.excel.EasyExcel;
+import com.entity.StudentBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,4 +87,38 @@ public class SubjectController {
 			response.getWriter().println("{'status':'1'}");
 		}
 	}
+
+	@RequestMapping("/downloadExcel")
+	public void downExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//设置响应头
+		response.setContentType("application/vnd.ms-excel");
+		response.setCharacterEncoding("UTF-8");
+
+		String filename = URLEncoder.encode("课程基本信息","UTF-8");
+
+		//文件下载方式
+		response.setHeader("Content-disposition","attachment;filename="+filename+".xlsx");
+
+		//根据StudentBean模板创建数据
+		List<SubjectBean> subjects = new ArrayList<>();
+		SubjectBean subject1 = new SubjectBean(30001,"java","欧老师","100");
+		SubjectBean subject2 = new SubjectBean(30002,"servlet","李老师","99");
+		SubjectBean subject3 = new SubjectBean(30003,"mybatis","张老师","97");
+		SubjectBean subject4 = new SubjectBean(30004,"spring","王老师","98");
+		SubjectBean subject5 = new SubjectBean(30005,"html","谢老师","100");
+		subjects.add(subject1);
+		subjects.add(subject2);
+		subjects.add(subject3);
+		subjects.add(subject4);
+		subjects.add(subject5);
+
+		//设置排除的属性
+		Set<String> set = new HashSet<>();
+		set.add("page");
+
+		//写入数据到excel
+		EasyExcel.write(response.getOutputStream(),SubjectBean.class).excludeColumnFieldNames(set).sheet("教师基本信息").doWrite(subjects);
+
+	}
+
 }
