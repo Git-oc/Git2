@@ -13,7 +13,21 @@ public class UserController {
     private UserServiceImpl userService;
 
     @RequestMapping("/login")
-    public String Login(String username,String password,String loginType){
+    public String Login1(String username,String password,String loginType){
+
+        try {
+            userService.checkLogin(username,password,loginType);
+            System.out.println("登录成功");
+            return "admin";
+        } catch (Exception e) {
+            System.out.println("登录失败");
+            return "login";
+        }
+
+    }
+
+    @RequestMapping("/")
+    public String Login2(String username,String password,String loginType){
 
         try {
             userService.checkLogin(username,password,loginType);
