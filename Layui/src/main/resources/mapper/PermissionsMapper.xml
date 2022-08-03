@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.layui.mapper.PermissionsMapper">
+
+    <select id="getPermissionByUsername" resultSets="java.util.Set" resultType="String">
+        select permission_code from users inner join users_roles on id=uid inner join roles on users_roles.rid=role_id inner join roles_permission
+        on role_id=roles_permission.rid inner join permissions on pid=permission_id where username=#{username}
+    </select>
+
+</mapper>

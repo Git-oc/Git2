@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="shortcut icon" href="../resources/favicon.ico" th:href="@{/static/favicon.ico}"/>
+  <link rel="stylesheet" href="layui/css/layui.css" tppabs="layui/css/layui.css"  media="all">
+  <script src="jquery-3.5.1/jquery-3.5.1.min.js"></script>
+  <script>
+	  function change(title){
+		  $('iframe').attr('src',title+".html");
+	  }
+  </script>
+</head>
+<body>
+	<div class="layui-layout layui-layout-admin">
+	  <div class="layui-header">
+		<div class="layui-logo">商品信息管理系统</div>
+		<!-- 头部区域（可配合layui 已有的水平导航） -->
+		<ul class="layui-nav layui-layout-left">
+
+		  <li class="layui-nav-item"><a href="">控制台</a></li>
+		  <li class="layui-nav-item"><a href="">商品管理</a></li>
+		  <li class="layui-nav-item"><a href="">用户</a></li>
+		  <li class="layui-nav-item">
+			<a href="javascript:;">其他系统</a>
+			<dl class="layui-nav-child">
+			  <dd><a href="">邮件管理</a></dd>
+			  <dd><a href="">信息管理</a></dd>
+			  <dd><a href="">授权管理</a></dd>
+			</dl>
+		  </li>
+		</ul>
+		<ul class="layui-nav layui-layout-right">
+			<shiro:user>
+				<li class="layui-nav-item">
+				<a href="javascript:;">
+					<img src="imgs/a.jpg" class="layui-nav-img">
+					<shiro:principal/>
+				</a>
+				<dl class="layui-nav-child">
+					<dd><a href="">基本资料</a></dd>
+					<dd><a href="">安全设置</a></dd>
+				</dl>
+				</li>
+				<li class="layui-nav-item"><a href="logout">退出</a></li>
+			</shiro:user>
+			<shiro:guest>
+				请<label style="color: white;text-decoration: underline" onclick="javascript:location.href='login.html'">登录</label>
+			</shiro:guest>
+		</ul>
+	  </div>
+	  <div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+		  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+		  <ul class="layui-nav layui-nav-tree" lay-filter="test">
+			<li class="layui-nav-item layui-nav-itemed">
+				<a href="javascript:;">商品管理</a>
+				<dl class="layui-nav-child">
+					<shiro:hasPermission name="i_add"><dd><a href="javascript:;" onclick="change('items')">添加商品</a></dd></shiro:hasPermission>
+					<shiro:hasPermission name="i_delete"><dd><a href="javascript:;" onclick="change('items')">移除商品</a></dd></shiro:hasPermission>
+					<shiro:hasPermission name="i_update"><dd><a href="javascript:;" onclick="change('items')">替换商品</a></dd></shiro:hasPermission>
+					<shiro:hasPermission name="i_find"><dd><a href="javascript:;" onclick="change('items')">查询商品</a></dd></shiro:hasPermission>
+				</dl>
+			</li>
+			  <li class="layui-nav-item">
+				  <a href="javascript:;">订单管理</a>
+				  <dl class="layui-nav-child">
+					  <shiro:hasPermission name="add"><dd><a href="javascript:;" onclick="change('order')">新增订单</a></dd></shiro:hasPermission>
+					  <shiro:hasPermission name="delete"><dd><a href="javascript:;" onclick="change('order')">取消订单</a></dd></shiro:hasPermission>
+					  <shiro:hasPermission name="update"><dd><a href="javascript:;" onclick="change('order')">修改订单</a></dd></shiro:hasPermission>
+					  <shiro:hasPermission name="find"><dd><a href="javascript:;" onclick="change('order')">查询订单</a></dd></shiro:hasPermission>
+				  </dl>
+			  </li>
+			  <li class="layui-nav-item">
+				  <a href="javascript:;">订单数据</a>
+				  <dl class="layui-nav-child">
+					  <dd><a href="javascript:;" onclick="change('bar')">柱状图</a></dd>
+					  <dd><a href="javascript:;" onclick="change('pie')">饼状图</a></dd>
+				  </dl>
+			  </li>
+		  </ul>
+		</div>
+	  </div>
+
+	  <div class="layui-body">
+		<!--内容主体区域-->
+		<div style="padding: 15px;">
+			<iframe src="items.html" frameborder="0" id="demoAdmin" style="width: 100%;height: 600px;"></iframe>
+		</div>
+	  </div>
+	</div>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+	//JS 
+	layui.use(['element', 'layer', 'util'], function(){
+	  var element = layui.element
+	  ,layer = layui.layer
+	  ,util = layui.util
+	  ,$ = layui.$;
+	});
+</script>
+</body>
+</html>
